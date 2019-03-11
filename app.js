@@ -11,17 +11,7 @@ GAME RULES:
 
 // DO THESE AT THE BEGGINING OF THE PROGRAM
 var scores, roundScore, activePlayer;
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
-// hide the dice right from the biggining
-document.querySelector('.dice').style.display = "none";
-// reset scores to 0
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-// reset current scores to 0
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
+startNewGame();
 // .......................................
 
 // event handler
@@ -70,6 +60,36 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
   }
 });
 
+document.querySelector('.btn-new').addEventListener('click', startNewGame);
+
+function startNewGame() {
+  // reset all scores
+  scores = [0, 0];
+  roundScore = 0;
+  // set active player to 0
+  activePlayer = 0;
+  // hide the dice
+  document.querySelector('.dice').style.display = "none";
+  // set all the DOM scores to 0
+  document.getElementById('score-0').textContent = '0';
+  document.getElementById('score-1').textContent = '0';
+  // set the DOM current scores to 0
+  document.getElementById('current-0').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+  // change the text winner back to previous state
+  document.getElementById('name-0').textContent = 'PLAYER 1';
+  document.getElementById('name-1').textContent = 'PLAYER 2';
+  // remove the winner class
+  document.querySelector('.player-0-panel').classList.remove('winner');
+  document.querySelector('.player-1-panel').classList.remove('winner');
+  // remove active class
+  document.querySelector('.player-0-panel').classList.remove('active');
+  document.querySelector('.player-1-panel').classList.remove('active');
+  // add active class to the player that starts the game
+  document.querySelector('.player-0-panel').classList.add('active'); 
+
+}
+
 function nextPlayer() {
   // next player turn
   activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
@@ -83,5 +103,4 @@ function nextPlayer() {
   document.querySelector('.player-1-panel').classList.toggle('active');
   // hide the dice
   document.querySelector('.dice').style.display = 'none';
-
 }
