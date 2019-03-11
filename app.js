@@ -8,17 +8,36 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+// select the element that holds the current score and manipulate its text
+//document.querySelector('#current-' + activePlayer).textContent = dice;
 
-var scores, roundScore, activePlayer, dice;
+// DO THESE AT THE BEGGINING OF THE PROGRAM
+var scores, roundScore, activePlayer;
 scores = [0, 0];
 roundScore = 0;
 activePlayer = 0;
-
-// generate a random number between 1 and 6
-dice = Math.floor(Math.random() * 6) + 1;
-
-// select the element that holds the current score and manipulate its text
-document.querySelector('#current-' + activePlayer).textContent = dice;
-
 // hide the dice right from the biggining
 document.querySelector('.dice').style.display = "none";
+// reset scores to 0
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+// reset current scores to 0
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
+// .......................................
+
+// event handler
+// when someone click od the button...
+document.querySelector('.btn-roll').addEventListener('click', function() {
+  // ...generate a random number between 1 and 6
+  var dice = Math.floor(Math.random() * 6) + 1;
+  // ...display the result
+  var diceDOM = document.querySelector('.dice');
+  // show the dice
+  diceDOM.style.display = 'block';
+  // manipulate the src attribute to addjust images to the rolled number
+  diceDOM.src = 'dice-' + dice + '.png';
+
+  // ..update the round score if the rolled number was not 1
+
+});
