@@ -10,53 +10,58 @@ GAME RULES:
 */
 
 // DO THESE AT THE BEGGINING OF THE PROGRAM
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 startNewGame();
 // .......................................
 
 // event handler
 // when someone click od the button...
 document.querySelector('.btn-roll').addEventListener('click', function() {
-  // ...generate a random number between 1 and 6
-  var dice = Math.floor(Math.random() * 6) + 1;
-  // ...display the result
-  var diceDOM = document.querySelector('.dice');
-  // show the dice
-  diceDOM.style.display = 'block';
-  // manipulate the src attribute to addjust images to the rolled number
-  diceDOM.src = 'dice-' + dice + '.png';
+  if(gamePlaying){
+    // ...generate a random number between 1 and 6
+    var dice = Math.floor(Math.random() * 6) + 1;
+    // ...display the result
+    var diceDOM = document.querySelector('.dice');
+    // show the dice
+    diceDOM.style.display = 'block';
+    // manipulate the src attribute to addjust images to the rolled number
+    diceDOM.src = 'dice-' + dice + '.png';
 
-  // ..update the round score if the rolled number was not 1
-  if(dice !== 1){
-    // add score
-    roundScore += dice;
-    // select the element that holds the current score and manipulate its text for the active player
-    document.querySelector('#current-' + activePlayer).textContent = roundScore;
-  } else {
-    // next player turn
-    nextPlayer();
+    // ..update the round score if the rolled number was not 1
+    if(dice !== 1){
+      // add score
+      roundScore += dice;
+      // select the element that holds the current score and manipulate its text for the active player
+      document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    } else {
+      // next player turn
+      nextPlayer();
+    }
   }
-
 });
 
 document.querySelector('.btn-hold').addEventListener('click', function() {
-  // add current score to the players global score
-  scores[activePlayer] += roundScore;
-  // update the UI
-  document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
-  // check if the player won the game
-  if(scores[activePlayer] >= 100){
-    // add a message to the active panel that the active player won the game
-    document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
-    // hide the dice
-    document.querySelector('.dice').style.display = 'none';
-    // add winner class
-    document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
-    // remove active class
-    document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
-  } else {
-    // next player
-    nextPlayer();
+  if(gamePlaying){
+    // add current score to the players global score
+    scores[activePlayer] += roundScore;
+    // update the UI
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    // check if the player won the game
+    if(scores[activePlayer] >= 100){
+      // add a message to the active panel that the active player won the game
+      document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
+      // hide the dice
+      document.querySelector('.dice').style.display = 'none';
+      // add winner class
+      document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+      // remove active class
+      document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+      // pause the game
+      gamePlaying = false;
+    } else {
+      // next player
+      nextPlayer();
+    }
   }
 });
 
@@ -68,6 +73,7 @@ function startNewGame() {
   roundScore = 0;
   // set active player to 0
   activePlayer = 0;
+  gamePlaying = true;
   // hide the dice
   document.querySelector('.dice').style.display = "none";
   // set all the DOM scores to 0
@@ -86,7 +92,7 @@ function startNewGame() {
   document.querySelector('.player-0-panel').classList.remove('active');
   document.querySelector('.player-1-panel').classList.remove('active');
   // add active class to the player that starts the game
-  document.querySelector('.player-0-panel').classList.add('active'); 
+  document.querySelector('.player-0-panel').classList.add('active');
 
 }
 
