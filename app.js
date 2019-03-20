@@ -11,9 +11,9 @@ GAME RULES:
 
 // DO THESE AT THE BEGGINING OF THE PROGRAM
 var scores, roundScore, activePlayer, gamePlaying;
+
 startNewGame();
 // .......................................
-
 // event handler
 // when someone click od the button...
 document.querySelector('.btn-roll').addEventListener('click', function() {
@@ -46,8 +46,16 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     scores[activePlayer] += roundScore;
     // update the UI
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+    var input = document.querySelector('.final-score').value;
+    var winningScore;
+    if(input) {
+      winningScore = input;
+    } else {
+      winningScore = 100;
+    }
     // check if the player won the game
-    if(scores[activePlayer] >= 100){
+    if(scores[activePlayer] >= winningScore){
       // add a message to the active panel that the active player won the game
       document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
       // hide the dice
